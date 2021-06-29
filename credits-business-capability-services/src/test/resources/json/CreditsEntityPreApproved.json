@@ -1,0 +1,67 @@
+{
+  "clientInformation": {
+    "documentId": {
+      "id": "1999218436",
+      "issueDate": "1995-04-11",
+      "type": "CC"
+    },
+    "email": "tae_xbmhz@mailinator.com",
+    "gender": "F",
+    "lastName": "TAE APE OEMRB",
+    "name": "TAE NOM OEMRB",
+    "phone": {
+      "number": "3991611510",
+      "prefix": "57"
+    }
+  },
+  "idClient": "23c49b2d-5c41-4b76-bcbc-5eb2866b4884",
+  "idCredit": "ebdab0bf-699b-48e8-ab0f-f339d8a61090",
+  "idProductOffer": "20a8e12b-aad8-4c6a-83bc-799525d50098",
+  "initialOffer": {
+  	"results": [
+      {
+        "approved": "PASS",
+        "description": "[Assessment{name=WALL_RULES, result=PASS}, Assessment{name=INTEREST_RATE, result=PASS}, Assessment{name=PAYMENT_CAPACITY, result=DENY}, Assessment{name=MAXIMUM_AMOUNT, result=DENY}, Assessment{name=PAYMENT_HABIT, result=PASS}, Assessment{name=PD_RANGE, result=PASS}, Assessment{name=CROSS_LIST, result=DENY}]",
+        "maxAmountInstallment": 0,
+        "maxTotalAmount": 2100000,
+        "schedule": [
+          {
+            "annualNominalRate": 0.18,
+            "installment": 12,
+            "interestRate": 0.19424682755113493,
+            "monthlyNominalRate": 0.015
+          },
+          {
+            "annualNominalRate": 0.19,
+            "installment": 24,
+            "interestRate": 0.20465299722911412,
+            "monthlyNominalRate": 0.01583333333333333
+          },
+          {
+            "annualNominalRate": 0.19,
+            "installment": 36,
+            "interestRate": 0.2069916620979224,
+            "monthlyNominalRate": 0.01583333333333333
+          },
+          {
+            "annualNominalRate": 0.19,
+            "installment": 48,
+            "interestRate": 0.20760931731600907,
+            "monthlyNominalRate": 0.01583333333333333
+          }
+        ],
+        "score": 0.02201624590589784,
+        "type": "v1"
+      }
+    ],
+    "riskEngineAnalysis": {
+      "amount": 18669000,
+      "installments": 12,
+      "interestRate": 16.5,
+      "maxAmountInstallment": 1688000,
+      "type": "dummy"
+    },
+    "typeOffer": "OK"
+  },
+  "creditType": "PREAPPROVED"
+}

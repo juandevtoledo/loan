@@ -1,0 +1,52 @@
+{
+  "content": {
+    "riskModelResponse": "OK",
+    "idCredit": "ede2b9c2-8441-49f7-b2fb-40b3a72308ec",
+    "offers": [
+      {
+        "idOffer": "0756a124-5323-4d0e-b988-eddac6cfbc8a",
+        "amount": 2000000.0,
+        "interestRate": 18.0,
+        "installments": 48,
+        "amountInstallment": null,
+        "insuranceCost": 0.0312,
+        "type": "COMFORTABLE_LOAN",
+        "name": "Crédito con cuotas bajas"
+      },
+      {
+        "idOffer": "86e2fdaf-8363-41fb-8924-ca5afb262811",
+        "amount": 2000000.0,
+        "interestRate": 18.0,
+        "installments": 12,
+        "amountInstallment": null,
+        "insuranceCost": 0.0312,
+        "type": "FAST_LOAN",
+        "name": "Crédito a corto plazo"
+      },
+      {
+        "idOffer": "72dcc57f-8724-4e77-91e6-f920bdae089d",
+        "amount": 2000000.0,
+        "interestRate": 18.0,
+        "installments": null,
+        "amountInstallment": null,
+        "insuranceCost": 0.0312,
+        "type": "FLEXIBLE_LOAN",
+        "name": "Crédito personalizado",
+        "simulateInstallment": [
+          {
+            "installment": 47,
+            "amount": 2000000.0
+          },
+          {
+            "installment": 46,
+            "amount": 1500000.0
+          },
+          {
+            "installment": 45,
+            "amount": 1000000.0
+          }
+        ]
+      }
+    ]
+  }
+}

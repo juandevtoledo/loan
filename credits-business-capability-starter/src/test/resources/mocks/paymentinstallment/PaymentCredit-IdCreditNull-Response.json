@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "failure": "idCredit is null or empty",
+      "value": "400"
+    }
+  ]
+}

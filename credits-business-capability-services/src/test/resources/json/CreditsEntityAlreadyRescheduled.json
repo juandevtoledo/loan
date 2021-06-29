@@ -1,0 +1,253 @@
+{
+  "acceptDate": "2020-03-09 10:50",
+  "dayOfPay": 15,
+  "acceptOffer": {
+    "amount": 1000000,
+    "amountInstallment": 90994,
+    "feeInsurance": 0.00312,
+    "idOffer": "045b6e3b-c2da-4a11-8e08-47d7dcc30da6",
+    "installments": 12,
+    "interestRate": 16.5,
+    "name": "Crédito a corto plazo",
+    "type": "FAST_LOAN"
+  },
+  "automaticDebit": true,
+  "aws:rep:deleting": false,
+  "aws:rep:updateregion": "us-east-1",
+  "aws:rep:updatetime": 1584109417.544001,
+  "clientInformation": {
+    "documentId": {
+      "id": "1999368732",
+      "issueDate": "1975-01-05",
+      "type": "CC"
+    },
+    "email": "tae_vbgbp@mailinator.com",
+    "gender": "M",
+    "lastName": "TAE APE JBJQJ",
+    "name": "TAE NOM JBJQJ",
+    "phone": {
+      "number": "3995465370",
+      "prefix": "57"
+    }
+  },
+  "decevalInformation": {
+    "clientAccountId": 206763,
+    "confirmationLoanOTP": "4740",
+    "decevalCorrelationId": "86osxVYOt9",
+    "promissoryNoteId": 951193
+  },
+  "encodedKeyLoanAccountMambu": "8a8186696dd47fd5016dd5ce70b8096a",
+  "idClient": "cfe4053d-9f55-40dd-98cc-6ee8a34cac43",
+  "idClientMambu": "1999368732",
+  "idCredit": "014176ef-e291-4db6-9b49-18d253a8ae5d",
+  "idLoanAccountMambu": "YAMW128",
+  "idSavingAccount": "MBWY015",
+  "initialOffer": {
+    "amount": 1000000,
+    "generateDate": "2020-02-27 10:50",
+    "offerEntities": [
+      {
+        "amount": 1000000,
+        "amountInstallment": 90994,
+        "feeInsurance": 0.00312,
+        "idOffer": "045b6e3b-c2da-4a11-8e08-47d7dcc30da6",
+        "installments": 12,
+        "interestRate": 16.5,
+        "name": "Crédito a corto plazo",
+        "type": "FAST_LOAN"
+      },
+      {
+        "amount": 1000000,
+        "amountInstallment": 28604,
+        "feeInsurance": 0.00312,
+        "idOffer": "49ca7a71-3d9c-4608-b8d6-ee953135dcbe",
+        "installments": 48,
+        "interestRate": 16.5,
+        "name": "Crédito con cuotas bajas",
+        "type": "COMFORTABLE_LOAN"
+      },
+      {
+        "amount": 1000000,
+        "feeInsurance": 0.00312,
+        "flexibleLoans": [
+          {
+            "amount": 28870,
+            "installment": 48
+          },
+          {
+            "amount": 29301,
+            "installment": 47
+          },
+          {
+            "amount": 29751,
+            "installment": 46
+          },
+          {
+            "amount": 30222,
+            "installment": 45
+          },
+          {
+            "amount": 30715,
+            "installment": 44
+          },
+          {
+            "amount": 31232,
+            "installment": 43
+          },
+          {
+            "amount": 31774,
+            "installment": 42
+          },
+          {
+            "amount": 32344,
+            "installment": 41
+          },
+          {
+            "amount": 32942,
+            "installment": 40
+          },
+          {
+            "amount": 33572,
+            "installment": 39
+          },
+          {
+            "amount": 34236,
+            "installment": 38
+          },
+          {
+            "amount": 34937,
+            "installment": 37
+          },
+          {
+            "amount": 35677,
+            "installment": 36
+          },
+          {
+            "amount": 36461,
+            "installment": 35
+          },
+          {
+            "amount": 37291,
+            "installment": 34
+          },
+          {
+            "amount": 38173,
+            "installment": 33
+          },
+          {
+            "amount": 39111,
+            "installment": 32
+          },
+          {
+            "amount": 40111,
+            "installment": 31
+          },
+          {
+            "amount": 41178,
+            "installment": 30
+          },
+          {
+            "amount": 42320,
+            "installment": 29
+          },
+          {
+            "amount": 43544,
+            "installment": 28
+          },
+          {
+            "amount": 44860,
+            "installment": 27
+          },
+          {
+            "amount": 46279,
+            "installment": 26
+          },
+          {
+            "amount": 47813,
+            "installment": 25
+          },
+          {
+            "amount": 49475,
+            "installment": 24
+          },
+          {
+            "amount": 51284,
+            "installment": 23
+          },
+          {
+            "amount": 53258,
+            "installment": 22
+          },
+          {
+            "amount": 55422,
+            "installment": 21
+          },
+          {
+            "amount": 57803,
+            "installment": 20
+          },
+          {
+            "amount": 60437,
+            "installment": 19
+          },
+          {
+            "amount": 63366,
+            "installment": 18
+          },
+          {
+            "amount": 66641,
+            "installment": 17
+          },
+          {
+            "amount": 70327,
+            "installment": 16
+          },
+          {
+            "amount": 74506,
+            "installment": 15
+          },
+          {
+            "amount": 79285,
+            "installment": 14
+          },
+          {
+            "amount": 84802,
+            "installment": 13
+          },
+          {
+            "amount": 91240,
+            "installment": 12
+          }
+        ],
+        "idOffer": "e5ed7861-ce46-44f5-a70f-758e524733b0",
+        "insurance": 272.3608333333333,
+        "interestAmount": 13750,
+        "interestRate": 16.5,
+        "name": "Crédito personalizado",
+        "type": "FLEXIBLE_LOAN"
+      }
+    ],
+    "riskEngineAnalysis": {
+      "amount": 22950000,
+      "installments": 12,
+      "interestRate": 16.5,
+      "maxAmountInstallment": 2075000,
+      "type": "dummy"
+    },
+    "typeOffer": "OK"
+  },
+  "loanRequested": {
+    "amount": 1000000,
+    "purpose": "viaje"
+  },
+  "modifiedHistory" : [
+    {
+      "idLoanAccountMambu": "YAMW127",
+      "acceptDate":  "2020-03-09 10:50",
+      "interestRate":  22,
+      "monthlyNominalRate":  1.6,
+      "annualNominalRate":  19.5,
+      "modificationType": "credit_restructured"
+    }
+  ]
+}

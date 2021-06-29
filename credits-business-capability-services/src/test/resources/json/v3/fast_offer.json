@@ -1,0 +1,10 @@
+{
+  "amount": 3000000,
+  "amountInstallment": 272981,
+  "feeInsurance": 0.00312,
+  "idOffer": "77202091-a50f-4090-b988-6d31cae5a0ed",
+  "installments": 12,
+  "interestRate": 16.5,
+  "name": "Crédito a corto plazo",
+  "type": "FAST_LOAN"
+}

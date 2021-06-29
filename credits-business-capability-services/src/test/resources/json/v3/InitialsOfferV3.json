@@ -1,0 +1,37 @@
+{
+  "amount": 2000000,
+  "offerEntities": [
+    {
+      "amount": 2000000,
+      "amountInstallment": 234008,
+      "annualNominalRate": 15.36,
+      "feeInsurance": 0.00312,
+      "idOffer": "65a04352-f0c6-44a6-b404-3428428b9603",
+      "installments": 12,
+      "interestRate": 16.5,
+      "monthlyNominalRate": 1.28,
+      "name": "Crédito a corto plazo",
+      "type": "FAST_LOAN"
+    },
+    {
+      "amount": 2000000,
+      "amountInstallment": 72978,
+      "annualNominalRate": 15.36,
+      "feeInsurance": 0.00312,
+      "idOffer": "9f36f272-91d0-4577-9834-cff601b372cf",
+      "installments": 48,
+      "interestRate": 16.5,
+      "monthlyNominalRate": 1.28,
+      "name": "Crédito con cuotas bajas",
+      "type": "COMFORTABLE_LOAN"
+    }
+  ],
+  "riskEngineAnalysis": {
+    "amount": 9837000,
+    "installments": 12,
+    "interestRate": 18,
+    "maxAmountInstallment": 890000,
+    "type": "dummy"
+  },
+  "typeOffer": "OK"
+}

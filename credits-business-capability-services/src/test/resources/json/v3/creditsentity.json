@@ -1,0 +1,30 @@
+{
+  "clientInformation": {
+    "documentId": {
+      "id": "1999054371",
+      "issueDate": "2002-07-10",
+      "type": "CC"
+    },
+    "email": "email@email.com",
+    "gender": "m",
+    "lastName": "TAE APE STBRB",
+    "name": "TAE NOM STBRB",
+    "phone": {
+      "number": "3999880112",
+      "prefix": "57"
+    }
+  },
+  "idClient": "aa9504b5-0485-4fc8-aacc-8d9f64092664",
+  "idCredit": "0869001d-ce22-48aa-b949-c17374a27ec0",
+  "idSavingAccount" : "26262626",
+  "idLoanAccountMambu" : "M4M8U-b78f5666",
+  "idLoanAccountMambu" : "M4M8U-b78f5666",
+  "loanRequested": {
+    "amount": 3000000,
+    "purpose": "vivienda"
+  },
+  "loanStatus": {
+    "status": "ACTIVE",
+    "certificationSent": 1
+  }
+}

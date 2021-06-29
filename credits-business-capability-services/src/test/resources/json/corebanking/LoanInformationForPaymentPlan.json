@@ -1,0 +1,74 @@
+{
+  "installmentExpectedDue": {
+    "value": 0.0,
+    "currency": "COP"
+  },
+  "totalBalance": {
+    "value": 734182.12,
+    "currency": "COP"
+  },
+  "loanAmount": {
+    "value": 1000000.0,
+    "currency": "COP"
+  },
+  "instalmentAccruedDue": {
+    "value": 0,
+    "currency": "COP"
+  },
+  "rates": {
+    "annualEffective": 34.49,
+    "monthlyNominal": 2.50
+  },
+  "loanId": "11111111111",
+  "state": "ACTIVE",
+  "creationOn": "2021-06-03 10:15",
+  "cutOffDate": "2021-07-26 10:15",
+  "installmentDate": "2021-08-03 00:00",
+  "automaticDebit": false,
+  "paymentPlanList": [
+    {
+      "dueDate": "2021-07-06 00:00",
+      "cutOffDate": "2021-06-28 00:00",
+      "state": "PAID",
+      "principalDue": 0.00,
+      "totalDue": 0.00,
+      "penaltyDue": 0,
+      "insuranceFee": null,
+      "feesDue": 0,
+      "interestDue": 0
+    },
+    {
+      "dueDate": "2021-08-03 00:00",
+      "cutOffDate": "2021-07-26 00:00",
+      "state": "PENDING",
+      "principalDue": 228496.95,
+      "totalDue": 265817.88,
+      "penaltyDue": 0,
+      "insuranceFee": 1908.87,
+      "feesDue": 0,
+      "interestDue": 37320.93
+    },
+    {
+      "dueDate": "2021-09-03 00:00",
+      "cutOffDate": "2021-08-24 00:00",
+      "state": "PENDING",
+      "principalDue": 252754.35,
+      "totalDue": 265817.88,
+      "penaltyDue": 0,
+      "insuranceFee": 1908.87,
+      "feesDue": 0,
+      "interestDue": 13063.53
+    },
+    {
+      "dueDate": "2021-10-04 00:00",
+      "cutOffDate": "2021-09-24 00:00",
+      "state": "PENDING",
+      "principalDue": 252930.82,
+      "totalDue": 259464.87,
+      "penaltyDue": 0,
+      "insuranceFee": 1908.87,
+      "feesDue": 0,
+      "interestDue": 6534.05
+    }
+  ]
+}

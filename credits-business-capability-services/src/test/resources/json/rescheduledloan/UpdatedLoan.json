@@ -1,0 +1,44 @@
+{
+  "originalLoanId": "YAMW128",
+  "modificationType": "credit_modified",
+  "rescheduledLoan": {
+    "id": "YAMW129",
+    "creationDate": "2021-02-07T13:28:34.050",
+    "lastModifiedDate": "2021-02-09T13:28:35.0",
+    "accountState": "ACTIVE",
+    "productTypeKey": "8a818f267010cf5801701207ffe14068",
+    "label": "MYLOAN",
+    "settlementAccountKey": "8a3aa27777531db601775d9b6865749b",
+    "interestRate": 22,
+    "balance": {
+      "currency": "COP",
+      "amount": 1005356.4
+    },
+    "interestBalance": 0,
+    "feeBalance": 0,
+    "accruedInterest": 0,
+    "accruedPenalty": 0,
+    "penaltyBalance": 0,
+    "loanAmount": {
+      "currency": "COP",
+      "amount": 1005356.4
+    },
+    "disbursementDate": "2021-02-09T13:28:36.0",
+    "totalBalance": {
+      "currency": "COP",
+      "amount": 1005356.4
+    },
+    "penaltyRate": 0.023,
+    "daysInArrears": 0,
+    "principalPaid": 0,
+    "interestPaid": 0,
+    "interestFromArrearsPaid": 0,
+    "feesPaid": 0,
+    "penaltyPaid": 0,
+    "totalPaid": 0,
+    "statusLoan": "Reestructurado",
+    "localCreationDate": "2021-02-09",
+    "clientId": "1999368732",
+    "dateOfPay": "2021-03-01T00:00:05.00"
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "dueDate": "2021-03-15 09:02",
+    "principalDue": 22154.28,
+    "totalDue": 84561.13,
+    "interestDue": 55906.85,
+    "feesDue": 6500
+  },
+  {
+    "dueDate": "2021-04-15 09:02",
+    "principalDue": 32857.08,
+    "totalDue": 84503.53,
+    "interestDue": 45204.05,
+    "feesDue": 6442.4
+  },
+  {
+    "dueDate": "2021-05-18 09:02",
+    "principalDue": 30578.78,
+    "totalDue": 84418.1,
+    "interestDue": 47482.35,
+    "feesDue": 6356.97
+  },
+  {
+    "dueDate": "2021-06-16 09:02",
+    "principalDue": 36856.08,
+    "totalDue": 84338.6,
+    "interestDue": 41205.05,
+    "feesDue": 6277.47
+  },
+  {
+    "dueDate": "2021-07-15 09:02",
+    "principalDue": 37485.08,
+    "totalDue": 84242.77,
+    "interestDue": 40576.05,
+    "feesDue": 6181.64
+  },
+  {
+    "dueDate": "2021-08-18 09:02",
+    "principalDue": 31239.24,
+    "totalDue": 84145.31,
+    "interestDue": 46821.89,
+    "feesDue": 6084.18
+  },
+  {
+    "dueDate": "2021-09-15 09:02",
+    "principalDue": 40016.68,
+    "totalDue": 84064.09,
+    "interestDue": 38044.45,
+    "feesDue": 6002.96
+  }
+]

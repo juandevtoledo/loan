@@ -1,0 +1,10 @@
+{
+  "content": {
+    "idClient": "22777300",
+    "idClientHash": "101010101010",
+    "creditAccountNumber": "43243242342",
+    "creditAccountHash": "hashProductType",
+    "savingAccountNumber": null,
+    "savingAccountHash": "emulatedProductType"
+  }
+}

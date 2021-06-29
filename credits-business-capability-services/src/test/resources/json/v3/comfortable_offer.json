@@ -1,0 +1,10 @@
+{
+  "amount": 3000000,
+  "amountInstallment": 85811,
+  "feeInsurance": 0.00312,
+  "idOffer": "50881cc8-9988-4155-8198-2ff70955d896",
+  "installments": 48,
+  "interestRate": 16.5,
+  "name": "Crédito con cuotas bajas",
+  "type": "COMFORTABLE_LOAN"
+}

@@ -1,0 +1,16 @@
+credits:
+  endpoint:
+    base: /credits
+server:
+  port: 8084
+  servlet:
+    contextPath: /credits
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          verify-exp: false
+          private-key-value: classpath:private_key.pem
+          public-key-value: classpath:public_key.pem

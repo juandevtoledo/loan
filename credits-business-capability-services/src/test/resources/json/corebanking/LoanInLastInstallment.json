@@ -1,0 +1,69 @@
+{
+  "totalBalance": {
+    "value": 600000,
+    "currency": "COP"
+  },
+  "installmentExpectedDue": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "loanAmount": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "instalmentAccruedDue": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "installmentExpected": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "state": "ACTIVE",
+  "creationOn": "2020-01-27 10:50",
+  "cutOffDate": "2020-02-17 10:50",
+  "installmentDate": "2020-02-27 10:50",
+  "loanId": 43341876755,
+  "paymentPlanList": [
+    {
+      "dueDate": "2020-11-25 00:00",
+      "state": "PAID",
+      "principalDue": 0.0,
+      "totalDue": 0.0,
+      "penaltyDue": 0.0,
+      "insuranceFee": null
+    },
+    {
+      "dueDate": "2020-12-28 00:00",
+      "state": "PAID",
+      "principalDue": 0.0,
+      "totalDue": 0.0,
+      "penaltyDue": 0.0,
+      "insuranceFee": null
+    },
+    {
+      "dueDate": "2021-01-25 00:00",
+      "state": "PAID",
+      "principalDue": 0.0,
+      "totalDue": 0.0,
+      "penaltyDue": 0.0,
+      "insuranceFee": null
+    },
+    {
+      "dueDate": "2021-02-25 00:00",
+      "state": "PAID",
+      "principalDue": 0.0,
+      "totalDue": 0.0,
+      "penaltyDue": 0.0,
+      "insuranceFee": null
+    },
+    {
+      "dueDate": "2021-03-25 00:00",
+      "state": "PARTIALLY_PAID",
+      "principalDue": 559794.21,
+      "totalDue": 560272.21,
+      "penaltyDue": 0.0,
+      "insuranceFee": 31980.0
+    }
+  ]
+}

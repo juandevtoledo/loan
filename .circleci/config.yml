@@ -1,0 +1,926 @@
+---
+version: 2.1
+
+commands:
+  gradlew-build:
+    steps:
+      - run:
+          name: Build Java application
+          command: |
+            ./gradlew clean build install --refresh-dependencies
+  clone-ci-scripts:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'd8:26:a9:3d:50:2a:c5:50:4b:ac:95:08:17:96:8e:51'
+      - run:
+          name: Clone lulobank-ci-scripts
+          command: |
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            git clone git@github.com:piso19/lulobank-ci-scripts.git
+  install-dgoss:
+    steps:
+      - checkout
+      - clone-ci-scripts
+      - setup_remote_docker
+      - run:
+          name: Install goss for Docker container testing
+          command: |
+            cd lulobank-ci-scripts/
+            bash download-dgoss.sh
+  regression-test:
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - clone-ci-scripts
+      - run:
+          name: Running regression tests
+          command: |
+            bash lulobank-ci-scripts/regressions.sh
+      - store_artifacts:
+          path: /e2e-tests/Framework_Automation/target
+      - persist_to_workspace:
+          root: /
+          paths:
+            - e2e-tests/Framework_Automation/target
+            - tmp/successful-execution
+  e2e-awss3sync:
+    parameters:
+      environment:
+        type: string
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run:
+          name: SyncDirectoryToS3
+          command: |
+            aws s3 sync e2e-tests/Framework_Automation/target s3://e2e-testing-reports/microservices/${APP_NAME}-bc/${CIRCLE_SHA1:0:7}-<<parameters.environment>> --delete
+  ecs-get-image-digest:
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - clone-ci-scripts
+      - run:
+          name: Get images digest
+          command: |
+            bash lulobank-ci-scripts/ecs-get-image-digest.sh
+      - persist_to_workspace:
+          root: /
+          paths:
+            - tmp/services
+  ecr-get-image-tag:
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - clone-ci-scripts
+      - run:
+          name: Get images tag
+          command: |
+            bash lulobank-ci-scripts/ecr-get-image-tag.sh
+      - store_artifacts:
+          path: /tmp/imageTag.html
+      - run:
+          name: Get artifacts
+          command: |
+            curl -X GET "https://circleci.com/api/v2/project/github/piso19/${CIRCLE_PROJECT_REPONAME}/$CIRCLE_BUILD_NUM/artifacts" \
+            -H "Accept: application/json" \
+            -u "$CIRCLE_API_TOKEN:" | jq -r .items[].url >> /tmp/artifac-num
+      - persist_to_workspace:
+          root: /
+          paths:
+            - tmp/artifac-num
+  regression-notification:
+    parameters:
+      slack-channel:
+        type: string
+      blocking-regression-test:
+        type: string  
+    steps:
+      - attach_workspace:
+          at: /
+      - run:
+          name: Get var BLOCKING_REGRESSION_TESTS
+          command: |
+            echo 'export BLOCKING_REGRESSION_TESTS=$<<parameters.blocking-regression-test>>' >> $BASH_ENV
+      - run:
+          name: Get Results
+          command: |
+            cat /tmp/successful-execution
+            if $(cat /tmp/successful-execution); then
+              echo 'export CHANNEL_NOTIFY="sanity-microservices"' >> $BASH_ENV
+              echo 'export MESSAGE="Regression test report"' >> $BASH_ENV
+              echo 'export EMOJI=":white_check_mark:"' >> $BASH_ENV
+              echo 'export COLOR="#008000"' >> $BASH_ENV
+            else
+              echo 'export CHANNEL_NOTIFY="sanity-microservices, <<parameters.slack-channel>>"' >> $BASH_ENV
+              echo 'export MESSAGE="Regression tests with errors"' >> $BASH_ENV
+              echo 'export EMOJI=":warning:"' >> $BASH_ENV
+              echo 'export COLOR="#ff0000"' >> $BASH_ENV
+            fi
+      - slack/notify:
+          channel: ${CHANNEL_NOTIFY}
+          template: REGRESSION_NOTIFICATION
+          event: pass
+      - run:
+          name: Broken pipeline
+          command: |
+            cat /tmp/successful-execution
+            if [[ $(cat /tmp/successful-execution) == false ]] && [[ $BLOCKING_REGRESSION_TESTS == true ]]
+            then
+              exit 1
+            else
+              exit 0
+            fi    
+  security-static-analysis:
+    parameters:
+      slack-channel:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/project
+      - setup_remote_docker
+      - clone-ci-scripts
+      - aws-cli/setup:
+          aws-region: AWS_REGION
+      - run:
+          name: Security Static Analysis SAST
+          command: |
+            bash lulobank-ci-scripts/security-static-analysis.sh
+      - slack/notify:
+          channel: '<<parameters.slack-channel>>'
+          template: FAILURE_VERACODE_SCAN_NOTIFICATION
+          event: fail
+      - slack/notify:
+          channel: '<<parameters.slack-channel>>'
+          template: SUCCESS_VERACODE_SCAN_NOTIFICATION
+          event: pass
+  validate-ecr-image-tag:
+    steps:
+      - aws-cli/setup:
+          aws-region: AWS_REGION
+      - clone-ci-scripts
+      - run:
+          name: Validate tags to deploy
+          command: |
+            bash lulobank-ci-scripts/validate-ecr-image-tag-v2.sh
+  test-sonar:
+    steps:
+      - envsubst/install
+      - checkout
+      - clone-ci-scripts
+      - run:
+          name: Check code on Sonar server
+          command: |
+            bash lulobank-ci-scripts/build-and-test-sonar.sh
+  ecr-pull-tag-push:
+    steps:
+      - aws-cli/install
+      - aws-cli/setup:
+          aws-region: AWS_REGION
+      - setup_remote_docker
+      - clone-ci-scripts
+      - run:
+          name: ECR pull, tag and push image
+          command: |
+            bash lulobank-ci-scripts/ecr-pull-tag-push.sh
+  tag-and-push-image-replica:
+    steps:
+      - clone-ci-scripts
+      - run:
+          name: Tag and push image replica
+          command: |
+            bash lulobank-ci-scripts/tag-and-push-image-replica.sh
+  ecr-build-push:
+    parameters:
+      tag-prefix:
+        type: string
+      ecr-suffix:
+        type: string
+        default: "central"
+    steps:
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          attach-workspace: true
+          workspace-root: /home/circleci/project
+          repo: '${APP_NAME}-bc-ecr-<<parameters.ecr-suffix>>'
+          path: '${APP_NAME}-business-capability-starter'
+          dockerfile: 'Dockerfile'
+          tag: '<<parameters.tag-prefix>>-${CIRCLE_SHA1},<<parameters.tag-prefix>>-latest'
+  ecs-deploy:
+    parameters:
+      aws-region:
+        type: string
+        default: AWS_REGION
+      tag-prefix:
+        type: string
+      slack-channel:
+        type: string
+    steps:
+      - aws-cli/install
+      - aws-cli/setup:
+          aws-region: <<parameters.aws-region>>
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+      - aws-ecs/update-service:
+          family: '${APP_NAME}-bc'
+          cluster-name: bc-cluster-${ENV}
+          container-image-name-updates: 'container=${APP_NAME}-bc-${ENV},image-and-tag=${AWS_ACCOUNT_ID_CENTRAL}.dkr.ecr.${<<parameters.aws-region>>}.amazonaws.com/${APP_NAME}-bc-ecr-central:<<parameters.tag-prefix>>-${CIRCLE_SHA1}'
+          verify-revision-is-deployed: true
+      - slack/notify:
+          channel: '<<parameters.slack-channel>>'
+          template: FAILURE_TEMPLATE
+          event: fail
+      - slack/notify:
+          channel: '<<parameters.slack-channel>>'
+          template: SUCCESS_TEMPLATE
+          event: pass
+orbs:
+  aws-cli: circleci/aws-cli@0.1.20
+  aws-ecr: circleci/aws-ecr@6.7.0
+  aws-ecs: circleci/aws-ecs@1.1.0
+  slack: circleci/slack@4.1.1
+  envsubst: sawadashota/envsubst@volatile
+
+jobs:
+  build_and_test:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - gradlew-build
+      - store_artifacts:
+          path: credits-business-capability-services/build/reports/tests/test
+      - store_artifacts:
+          path: credits-business-capability-starter/build/reports/tests/test
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - build/libs
+            - '*-business-capability-starter/build/libs'
+            - '*-business-capability-starter/build/resources'
+  build_and_test_sonar:
+    docker:
+      - image: circleci/openjdk:11-jdk-browsers
+    steps:
+      - test-sonar
+  build_and_test_goss:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    environment:
+      GOSS_FILES_STRATEGY: cp
+      GOSS_WAIT_OPTS: '-r 50s -s 1s > /dev/null'
+    steps:
+      - checkout
+      - install-dgoss
+      - gradlew-build
+      - run:
+          name: Run container test
+          no_output_timeout: 5m
+          command: |
+            # Pull AWS Docker images
+            docker pull roribio16/alpine-sqs
+            # Pull Firebase Docker images
+            docker pull filipeforattini/firebase-server
+            # Create network
+            docker network create myNetwork${APP_NAME} || true
+            # Run Firebase Server container on network
+            docker run -d --name firebase.dev.local -p 5000:5000 --network myNetwork${APP_NAME} filipeforattini/firebase-server
+            # Run SQS container on network
+            docker run -d --name sqs.dev.local -p 9324:9324 -p 9325:9325 --network myNetwork${APP_NAME} roribio16/alpine-sqs
+            docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/bc-${APP_NAME}-business-capability:${CIRCLE_BUILD_NUM} ${APP_NAME}-business-capability-starter/
+            dgoss run -p ${CONTAINER_PORT}:${CONTAINER_PORT} --name ${APP_NAME}.dev.local -e AWS_ACCESS_KEY_ID=fakeMyKeyId -e AWS_SECRET_ACCESS_KEY=fakeSecretAccessKey -e GOOGLE_APPLICATION_CREDENTIALS=/opt/firebase/firebase-adminsdk.json  --network myNetwork${APP_NAME} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/bc-${APP_NAME}-business-capability:${CIRCLE_BUILD_NUM}
+  build_and_test_pitest:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - checkout
+      - run:
+          name: Run pitest
+          # ./gradlew pitest
+          command: |
+            echo 'pitest'
+  python_integration_test:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      PYTHONPATH: .
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          name: Run integration test
+          command: |
+            sudo pip install pipenv
+            pipenv install "requests>2.19"
+            pipenv install "boto3>1.13"
+            pipenv install "requests_pkcs12>1.0.6"
+            pipenv install "simplejson>2.1.4"
+            cd it-python
+            pipenv run python3 -m unittest accept_offer_test.py
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - "venv"
+  release:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - '7d:41:3b:63:08:c1:03:d3:bd:56:63:09:e3:fd:67:23'
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /home/circleci/project
+      - run:
+          name: Release new artifact
+          command: |
+            git config --global user.email ubuntu@box176.localdomain
+            git config --global user.name Ubuntu
+            ./gradlew release -Prelease.useAutomaticVersion=true
+            ./gradlew artifactoryPublish
+  release-production:
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - '7d:41:3b:63:08:c1:03:d3:bd:56:63:09:e3:fd:67:23'
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /home/circleci/project
+      - run:
+          name: Release new artifact
+          command: |
+            git tag release-${CIRCLE_SHA1}
+            git push origin --tags
+  ecr-build-push-playground:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecr-build-push:
+          tag-prefix: playground
+  security-static-analysis-playground:
+    docker:
+      - image: circleci/openjdk:11-jdk-browsers
+    environment:
+      TAG_IMAGE: playground
+      ENV: playground
+    steps:
+      - security-static-analysis:
+          slack-channel: deploy-play-bcs
+  ecs-deploy-playground:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION
+          tag-prefix: playground
+          slack-channel: deploy-play-bcs
+  execute-e2e-test-playground:
+    docker:
+      - image: ${AWS_ACCOUNT_ID_CENTRAL}.dkr.ecr.${AWS_REGION}.amazonaws.com/e2e-tests-ecr-central:playground-latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - regression-test
+  e2e-awss3sync-playground:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - e2e-awss3sync:
+          environment: play
+  get-images-digest-playground:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-get-image-digest
+  get-images-tag-playground:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: playground
+    steps:
+      - ecr-get-image-tag
+  regression-notification-playground:
+    docker:
+      - image: cibuilds/base:latest
+    steps:
+      - regression-notification:
+          slack-channel: deploy-play-bcs
+          blocking-regression-test: BLOCKING_REGRESSION_TESTS_PLAY
+  ecr-build-push-snapshot:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecr-build-push:
+          tag-prefix: snapshot
+  ecr-build-push-snapshot-support:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecr-build-push:
+          tag-prefix: snapshot
+          ecr-suffix: support
+  security-static-analysis-sandbox:
+    docker:
+      - image: circleci/openjdk:11-jdk-browsers
+    environment:
+      TAG_IMAGE: snapshot
+      ENV: sandbox
+    steps:
+      - security-static-analysis:
+          slack-channel: deploy-sand-logos
+  ecs-deploy-sandbox:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION
+          tag-prefix: snapshot
+          slack-channel: deploy-sand-logos
+  execute-e2e-test-sandbox:
+    docker:
+      - image: ${AWS_ACCOUNT_ID_CENTRAL}.dkr.ecr.${AWS_REGION}.amazonaws.com/e2e-tests-ecr-central:snapshot-latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - regression-test
+  e2e-awss3sync-sandbox:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - e2e-awss3sync:
+          environment: sand
+  get-images-digest-sandbox:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-get-image-digest
+  get-images-tag-sandbox:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: snapshot
+    steps:
+      - ecr-get-image-tag
+  regression-notification-sandbox:
+    docker:
+      - image: cibuilds/base:latest
+    steps:
+      - regression-notification:
+          slack-channel: deploy-sand-logos
+          blocking-regression-test: BLOCKING_REGRESSION_TESTS_SAND
+  ecr-pull-tag-push-qa:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: snapshot
+      NEW_TAG_IMAGE: qa
+      ECR_SUFFIX: central
+    steps:
+      - ecr-pull-tag-push
+  ecr-pull-tag-push-qa-support:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: snapshot
+      NEW_TAG_IMAGE: qa
+      ECR_SUFFIX: support
+    steps:
+      - ecr-pull-tag-push
+  ecs-deploy-qa:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION
+          tag-prefix: qa
+          slack-channel: deploy-qa-logos
+  execute-e2e-test-qa:
+    docker:
+      - image: ${AWS_ACCOUNT_ID_CENTRAL}.dkr.ecr.${AWS_REGION}.amazonaws.com/e2e-tests-ecr-central:snapshot-latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - regression-test
+  e2e-awss3sync-qa:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - e2e-awss3sync:
+          environment: qa
+  get-images-digest-qa:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-get-image-digest
+  get-images-tag-qa:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: qa
+    steps:
+      - ecr-get-image-tag
+  regression-notification-qa:
+    docker:
+      - image: cibuilds/base:latest
+    steps:
+      - regression-notification:
+          slack-channel: deploy-qa-logos
+          blocking-regression-test: BLOCKING_REGRESSION_TESTS_QA
+  ecr-build-push-release:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: release
+    steps:
+      - ecr-build-push:
+          tag-prefix: release
+      - tag-and-push-image-replica
+  ecr-build-push-release-support:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecr-build-push:
+          tag-prefix: release
+          ecr-suffix: support
+  security-static-analysis-staging:
+    docker:
+      - image: circleci/openjdk:11-jdk-browsers
+    environment:
+      TAG_IMAGE: release
+      ENV: staging
+    steps:
+      - security-static-analysis:
+          slack-channel: deploy-stg-logos
+  validate-release-tag:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: release
+      REPOSITORY_NAME: credits-bc-ecr-central
+    steps:
+      - validate-ecr-image-tag
+  ecs-deploy-staging:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION
+          tag-prefix: release
+          slack-channel: deploy-stg-logos
+  ecs-deploy-staging-replica:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION_REPLICA
+          tag-prefix: release
+          slack-channel: deploy-stg-logos
+  ecr-pull-tag-push-production:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: release
+      NEW_TAG_IMAGE: stable
+      ECR_SUFFIX: central
+    steps:
+      - ecr-pull-tag-push
+  ecr-pull-tag-push-production-support:
+    docker:
+      - image: circleci/python:3.7.1
+    environment:
+      TAG_IMAGE: release
+      NEW_TAG_IMAGE: stable
+      ECR_SUFFIX: support
+    steps:
+      - ecr-pull-tag-push
+  ecs-deploy-production:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION
+          tag-prefix: stable
+          slack-channel: deploy-prod
+  ecs-deploy-production-replica:
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - ecs-deploy:
+          aws-region: AWS_REGION_REPLICA
+          tag-prefix: stable
+          slack-channel: deploy-prod
+workflows:
+  build-n-deploy:
+    jobs:
+      - build_and_test
+      - build_and_test_sonar:
+          context: build-and-test
+      - build_and_test_goss
+      - build_and_test_pitest
+
+      - ecr-build-push-playground:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - build_and_test
+            - build_and_test_sonar
+            - build_and_test_goss
+      - security-static-analysis-playground:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - ecr-build-push-playground
+      - ecs-deploy-playground:
+          context: deploy-play
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - ecr-build-push-playground
+      - execute-e2e-test-playground:
+          context: deploy-play
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - ecs-deploy-playground
+      - e2e-awss3sync-playground:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - execute-e2e-test-playground
+      - get-images-digest-playground:
+          context: deploy-play
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - ecs-deploy-playground
+      - get-images-tag-playground:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/playground.*/'
+          requires:
+            - get-images-digest-playground
+      - regression-notification-playground:
+          context: deploy-play
+          requires:
+            - get-images-tag-playground
+            - e2e-awss3sync-playground
+          filters:
+            branches:
+              only: '/playground.*/'
+
+      - ecr-build-push-snapshot:
+          context: deploy-shared
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - build_and_test
+            - build_and_test_goss
+      - ecr-build-push-snapshot-support:
+          context: deploy-support
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - build_and_test
+            - build_and_test_goss
+      - security-static-analysis-sandbox:
+          context: deploy-shared
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - ecr-build-push-snapshot
+      - ecs-deploy-sandbox:
+          context: deploy-sandbox
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - ecr-build-push-snapshot
+      - execute-e2e-test-sandbox:
+          context: deploy-sandbox
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - ecs-deploy-sandbox
+      - e2e-awss3sync-sandbox:
+          context: deploy-shared
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - execute-e2e-test-sandbox
+      - get-images-digest-sandbox:
+          context: deploy-sandbox
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - ecs-deploy-sandbox
+      - get-images-tag-sandbox:
+          context: deploy-shared
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - get-images-digest-sandbox
+      - regression-notification-sandbox:
+          context: deploy-sandbox
+          requires:
+            - get-images-tag-sandbox
+            - e2e-awss3sync-sandbox
+          filters:
+            branches:
+              only: 'master'
+
+      - hold-qa:
+          type: approval
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - regression-notification-sandbox
+      - ecr-pull-tag-push-qa:
+          context: deploy-shared
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - hold-qa
+      - ecr-pull-tag-push-qa-support:
+          context: deploy-support
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - hold-qa
+      - ecs-deploy-qa:
+          context: deploy-qa
+          filters:
+            branches:
+              only: 'master'
+          requires:
+            - ecr-pull-tag-push-qa
+      - execute-e2e-test-qa:
+          context: e2e-automation-qa
+          filters:
+            branches:
+              only: '/release.*/'
+      - e2e-awss3sync-qa:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - execute-e2e-test-qa
+      - get-images-digest-qa:
+          context: deploy-qa
+          filters:
+            branches:
+              only: '/release.*/'
+      - get-images-tag-qa:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - get-images-digest-qa
+      - regression-notification-qa:
+          context: deploy-qa
+          requires:
+            - get-images-tag-qa
+            - e2e-awss3sync-qa
+          filters:
+            branches:
+              only: '/release.*/'
+
+      - hold-staging:
+          type: approval
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - regression-notification-qa
+            - build_and_test
+            - build_and_test_goss
+            - build_and_test_sonar
+      - ecr-build-push-release:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - hold-staging
+      - ecr-build-push-release-support:
+          context: deploy-support
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - hold-staging
+      - security-static-analysis-staging:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecr-build-push-release
+      - validate-release-tag:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - security-static-analysis-staging
+      - ecs-deploy-staging:
+          context: deploy-staging
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecr-build-push-release
+      - ecs-deploy-staging-replica:
+          context: deploy-staging
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecr-build-push-release
+
+      - hold-production:
+          type: approval
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecs-deploy-staging
+      - release-production:
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - hold-production
+      - ecr-pull-tag-push-production:
+          context: deploy-shared
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - hold-production
+      - ecr-pull-tag-push-production-support:
+          context: deploy-support
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - hold-production
+      - ecs-deploy-production:
+          context: deploy-production
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecr-pull-tag-push-production
+      - ecs-deploy-production-replica:
+          context: deploy-production
+          filters:
+            branches:
+              only: '/release.*/'
+          requires:
+            - ecr-pull-tag-push-production
+...

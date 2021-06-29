@@ -1,0 +1,59 @@
+{
+  "idCredit": "0467b237-925a-40d6-aa57-7dcdce68681f",
+  "idLoanCBS": "79624120546",
+  "requestedAmount": {
+    "amount": {
+      "value": 12300000
+    },
+    "currency": {
+      "value": "COP"
+    }
+  },
+  "payOffAmount": {
+    "amount": {
+      "value": 12419973.86
+    },
+    "currency": {
+      "value": "COP"
+    }
+  },
+  "paidAmount": {
+    "amount": {
+      "value": 0
+    },
+    "currency": {
+      "value": "COP"
+    }
+  },
+  "state": "ACTIVE",
+  "paidInstallments": 0,
+  "installments": 48,
+  "createOn": "2021-02-15 20:16",
+  "closedDate": "2021-02-15 20:16",
+  "rates": {
+    "monthlyNominal": {
+      "value": 1.28
+    },
+    "annualEffective": {
+      "value": 16.5
+    }
+  },
+  "paymentPlanList": [
+    {
+      "dueDate": "2021-04-12 00:00",
+      "state": "PENDING",
+      "principalDue": 54704.84,
+      "totalDue": 376546.98,
+      "penaltyDue": 0,
+      "insuranceFee": 31980
+    },
+    {
+      "dueDate": "2021-05-10 00:00",
+      "state": "PENDING",
+      "principalDue": 200280.5,
+      "totalDue": 344566.98,
+      "penaltyDue": 0,
+      "insuranceFee": 31920.92
+    }
+  ]
+}

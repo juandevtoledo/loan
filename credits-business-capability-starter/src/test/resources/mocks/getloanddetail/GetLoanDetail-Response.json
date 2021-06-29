@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "idLoan": "MQMJ710",
+      "idCredit": "6589444b-7437-4eb9-8407-3c718c8a1745",
+      "productType": "8a8187256bd203cd016bd241fed011c6",
+      "balance": 550.0,
+      "state": null,
+      "paidInstallments": 2,
+      "installments": 4,
+      "nextInstallment": {
+        "dueOn": "2019-11-15T13:00",
+        "amount": 10005.0
+      },
+      "interestRate": 0.0
+    }
+  ]
+}

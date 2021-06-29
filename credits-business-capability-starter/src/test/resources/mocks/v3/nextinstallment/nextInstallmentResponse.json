@@ -1,0 +1,21 @@
+{
+  "flags": {
+    "payNow": false,
+    "minimumPaymentActive": true,
+    "automaticDebitActive": true
+  },
+  "idCredit": "0467b237-925a-40d6-aa57-7dcdce68681f",
+  "idLoanCBS": "79624120546",
+  "loanPurpose": "",
+  "state": "ACTIVE",
+  "installmentState": "UP_TO_DAY",
+  "payOffAmount": {
+    "value": 1348955.55,
+    "currency": "COP"
+  },
+  "installmentDate": "2021-03-04 11:32",
+  "nextInstallmentAmount": {
+    "value": 28955.55,
+    "currency": "COP"
+  }
+}

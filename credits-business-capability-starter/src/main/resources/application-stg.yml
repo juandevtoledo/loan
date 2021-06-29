@@ -1,0 +1,106 @@
+credits:
+  endpoint:
+    base: /credits
+server:
+  port: 8084
+  servlet:
+    contextPath: /credits
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          verify-exp: false
+          private-key-value: classpath:private_key.pem
+          public-key-value: classpath:public_key.pem
+  zipkin:
+    baseUrl: ${SPRING_ZIPKIN_BASEURL}
+
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  health:
+    circuitbreakers:
+      enabled: true
+
+health:
+  flexibility:
+    enabled: true
+
+creditscondition:
+  minOfferAmount:  ${MIN_OFFER_AMOUNT}
+  loanProductId: ${LOAN_PRODUCT_ID}
+  defaultCurrency: ${DEFAULT_CURRENCY}
+  insuranceCost: ${INSURANCE_COST}
+  cbsProductKeyType: ${CBS_PRODUCT_KEY}
+  feeInsurance: ${FEE_INSURANCE}
+flexibility:
+  sdk:
+    url: ${FLEXIBILITY_ENDPOINT}
+    clientId: ${FLEXIBILITY_CLIENT_ID}
+    secret: ${FLEXIBILITY_SECRET}
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ${AWS_SQS_REGION}
+    sqs:
+      endpoint: ${AWS_SQS_ENDPOINT}
+      listeners:
+        application-events: ${AWS_SQS_CREDITS_ENDPOINT}
+      queue:
+        saving-account-events: ${AWS_SQS_SAVING_ACCOUNT_ENDPOINT}
+        client-events: ${AWS_SQS_CLIENTS_ENDPOINT}
+        client-events-v2: ${AWS_SQS_CLIENTS_ENDPOINT_V2}
+        transaction-events: ${AWS_SQS_TRANSACTIONS_ENDPOINT}
+        reporting-events: ${AWS_SQS_REPORTING_ENDPOINT}
+        reporting-events-v2: ${AWS_SQS_REPORTING_V2_ENDPOINT}
+        promissorynote-events: ${AWS_SQS_PROMISSORYNOTE_ENDPOINT}
+        client-alerts-events: ${AWS_SQS_CLIENT_ALERTS_ENDPOINT}
+        risk-engine: ${AWS_SQS_ANALYTICS_ENDPOINT}
+        scheduler-events: ${AWS_SQS_SCHEDULER_ENDPOINT}
+        pse-events: ${AWS_SQS_PSE_ENDPOINT}
+        reporting-rx-events:
+          url: ${AWS_SQS_REPORTING_RX_ENDPOINT}
+    dynamodb:
+      endpoint: ${AWS_DYNAMO_ENDPOINT}
+
+services:
+  clients:
+    url: ${CLIENTS_SERVICE_URL}
+  savings:
+    url: ${SAVINGS_SERVICE_URL}
+  otp:
+    url: ${OTP_SERVICE_URL}
+  promissorynote:
+    url: ${PROMISSORYNOTE_SERVICE_URL}
+
+  riskengine:
+    url: ${RISK_ENGINE_ENDPOINT}
+    connectionTimeOut: ${RISK_ENGINE_CONNECTION_TIMEOUT}
+    writeTimeOut: ${RISK_ENGINE_WRITE_TIMEOUT}
+    readTimeOut: ${RISK_ENGINE_READ_TIMEOUT}
+  mask-fields:
+    complete: '/password,/newpin,/oldpin,/newPassword,/oldPassword'
+    partially:
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: ${RESILIENCE_SLIDING_WINDOW_SIZE}
+      minimumNumberOfCalls: ${RESILIENCE_MINIMUM_NUMBER_OF_CALLS}
+      permittedNumberOfCallsInHalfOpenState: ${RESILIENCE_PERMITTED_NUMBER_OF_CALLS_HOS}
+      failureRateThreshold: ${RESILIENCE_FAILURE_RATE_THRESHOLD}
+      slowCallRateThreshold: ${RESILIENCE_SLOW_CALL_RATE_THRESHOLD}
+      slowCallDurationThreshold: ${RESILIENCE_SLOW_CALL_DURATION_THRESHOLD}
+      ignore-exceptions:
+        - flexibility.client.connector.ProviderException
+  instances:
+    flexibility:
+      baseConfig: default

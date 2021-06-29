@@ -1,0 +1,44 @@
+{
+  "content": [
+    {
+      "loanDetail": {
+        "idCredit": "6589444b-7437-4eb9-8407-3c718c8a1745",
+        "idCreditCBS": "MQMJ710",
+        "amount": 100000,
+        "balance": 70283.45,
+        "paidAmount": 1000000,
+        "state": "CLOSED",
+        "paidInstallments": 3,
+        "installments": 12,
+        "dueInstallments": 9,
+        "monthlyInstallment": 10000,
+        "interestRate": 16.5,
+        "automaticDebit": false,
+        "createOn": "2020-01-01T10:00:00",
+        "monthlyNominalRate": 1.28
+      },
+      "nextInstallment": {
+        "installmentPaid": false,
+        "disableMinimumPayment": true,
+        "balance": 70283.45,
+        "dueOn": "2019-11-15T13:00:00",
+        "lastPaidDate": "",
+        "amount": 10000
+      },
+      "paymentList": [
+        {
+          "due": "2019-12-05",
+          "state": "LOAN_REPAYMENT",
+          "totalDue": 1000000,
+          "detail": {
+            "insuranceCost": 322.52,
+            "capitalPayment": 935750.6,
+            "ratePayment": 63926.88,
+            "penaltyAmount": null
+          }
+        }
+      ],
+      "closedDate": "2016-03-04T11:30:00"
+    }
+  ]
+}

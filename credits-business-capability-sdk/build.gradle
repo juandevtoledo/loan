@@ -1,0 +1,27 @@
+description = ''
+
+configurations.all {
+    exclude group: 'org.springframework.cloud', module: 'spring-cloud-config-client'
+}
+
+dependencies {
+
+    // Functional programming
+    implementation 'io.vavr:vavr:0.10.2'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    // Lulobank
+    compile group: 'com.lulobank', name: 'clients-business-capability-sdk', version: '1.0.193-SNAPSHOT'
+    compile group: 'com.lulobank', name: 'lulobank-core', version: '1.0.23-SNAPSHOT'
+    implementation 'com.lulobank:logger-api:0.0.3'
+
+    // Others
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+
+    // Testing libs
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

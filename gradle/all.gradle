@@ -1,0 +1,52 @@
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'idea'
+  apply plugin: 'jacoco'
+  apply plugin: 'maven'
+  apply plugin: 'maven-publish'
+  apply plugin: 'com.jfrog.artifactory'
+  apply from: "$rootDir/gradle/code-quality/checkstyle.gradle"
+  apply from: "$rootDir/gradle/code-quality/spotbugs.gradle"
+  apply from: "$rootDir/gradle/code-quality/pmd.gradle"
+
+  idea {
+    module {
+      outputDir file('build/classes/main')
+      testOutputDir file('build/classes/test')
+    }
+  }
+  jacoco {
+    toolVersion = "${jacocoVersion}"
+  }
+  group 'com.lulobank'
+  version = rootProject.version
+
+  artifactory {
+    contextUrl = "$jfrogContextUrl"
+    publish {
+      repository {
+        if (project.version.endsWith('-SNAPSHOT'))
+          repoKey = 'libs-snapshot-local'
+        else
+          repoKey = 'libs-release-local'
+        username = "$jfrogUser"
+        password = "$jfrogPassword"
+        maven = true
+
+      }
+
+      defaults {
+        publications('mavenJava')
+      }
+    }
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+      }
+    }
+  }
+  artifactoryPublish.dependsOn build
+}

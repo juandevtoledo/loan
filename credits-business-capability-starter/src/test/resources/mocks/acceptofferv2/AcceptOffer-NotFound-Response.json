@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "failure": "CREDIT_NOT_EXIST",
+      "value": "404"
+    }
+  ]
+}

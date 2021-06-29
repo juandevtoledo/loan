@@ -1,0 +1,45 @@
+{
+  "idClient": "8f5d2ded-6d4a-454f-b9ce-fd5842699420",
+  "idCredit": "04c1a8c1-89b6-42e9-b6ef-e53fe2b32ece",
+  "initialOffer": {
+    "results": [
+      {
+        "approved": 1,
+        "description": "Prueba QA PIS-25708",
+        "maxAmountInstallment": 81341,
+        "maxTotalAmount": 3300000,
+        "schedule": [
+          {
+            "installment": "12",
+            "interestRate": "16.55",
+            "monthlyNominalRate": "1.28416667",
+            "annualNominalRate": "15.41"
+
+          },
+          {
+            "installment": "24",
+            "interestRate": "16.3",
+            "monthlyNominalRate": "16.55",
+            "annualNominalRate": "15.20"
+          },
+          {
+            "installment": "36",
+            "interestRate": "15",
+            "monthlyNominalRate": "1.17166667",
+            "annualNominalRate": "14.06"
+          },
+          {
+            "installment": "48",
+            "interestRate": "14.82",
+            "monthlyNominalRate": "1.15833333",
+            "annualNominalRate": "13.90"
+          }
+        ],
+        "score": 0.014688234845045433,
+        "type": "v1"
+      }
+    ]
+  },
+  "status": "completed",
+  "creditType": "PREAPPROVED"
+}

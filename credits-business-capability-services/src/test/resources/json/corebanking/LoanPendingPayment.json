@@ -1,0 +1,45 @@
+{
+  "totalBalance": {
+    "value": 600000,
+    "currency": "COP"
+  },
+  "installmentExpectedDue": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "loanAmount": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "instalmentAccruedDue": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "installmentExpected": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "state": "ACTIVE",
+  "creationOn": "2020-01-27 10:50",
+  "cutOffDate": "2020-02-17 10:50",
+  "installmentDate": "2020-02-27 10:50",
+  "loanId": 43341876755,
+  "paymentPlanList": [
+    {
+      "dueDate": "2020-03-27 10:50",
+      "state": "PENDING",
+      "principalDue": 500.00,
+      "totalDue": 650.00,
+      "penaltyDue": 100.00,
+      "insuranceFee": 50.00
+    },
+    {
+      "dueDate": "2020-04-27 10:50",
+      "state": "PENDING",
+      "principalDue": 500.00,
+      "totalDue": 650.00,
+      "penaltyDue": 100.00,
+      "insuranceFee": 50.00
+    }
+  ]
+}

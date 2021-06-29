@@ -1,0 +1,91 @@
+[
+  {
+    "due": "2021-02-25 01:00",
+    "state": "LOAN_REPAYMENT",
+    "totalDue": 285970.1,
+    "detail": {
+      "insuranceAmount": 0,
+      "capitalAmount": 156750.23,
+      "interestAmount": 129219.87,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2021-02-25 00:14",
+    "state": "FEED_APPLIED",
+    "totalDue": 129219.87,
+    "detail": {
+      "insuranceAmount": 0,
+      "capitalAmount": 0,
+      "interestAmount": 129219.87,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2021-01-25 00:48",
+    "state": "LOAN_REPAYMENT_TOTAL",
+    "totalDue": 285970.1,
+    "detail": {
+      "insuranceAmount": 0,
+      "capitalAmount": 167139.8,
+      "interestAmount": 118830.3,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2021-01-25 00:11",
+    "state": "LOAN_REPAYMENT_TOTAL",
+    "totalDue": 118830.3,
+    "detail": {
+      "insuranceAmount": 0,
+      "capitalAmount": 0,
+      "interestAmount": 118830.3,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2020-12-28 00:40",
+    "state": "FEED_APPLIED",
+    "totalDue": 310954.65,
+    "detail": {
+      "insuranceAmount": 24984.55,
+      "capitalAmount": 143775.29,
+      "interestAmount": 142194.81,
+      "penaltyAmount": 0
+    }
+  },
+
+  {
+    "due": "2020-12-30 00:40",
+    "state": "LOAN_REPAYMENT",
+    "totalDue": 310954.65,
+    "detail": {
+      "insuranceAmount": 24984.55,
+      "capitalAmount": 143775.29,
+      "interestAmount": 142194.81,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2020-12-30 01:50",
+    "state": "LOAN_REPAYMENT",
+    "totalDue": 310954.65,
+    "detail": {
+      "insuranceAmount": 24984.55,
+      "capitalAmount": 143775.29,
+      "interestAmount": 142194.81,
+      "penaltyAmount": 0
+    }
+  },
+  {
+    "due": "2020-12-30 02:40",
+    "state": "OTHER_TYPE",
+    "totalDue": 310954.65,
+    "detail": {
+      "insuranceAmount": 24984.55,
+      "capitalAmount": 143775.29,
+      "interestAmount": 142194.81,
+      "penaltyAmount": 0
+    }
+  }
+]

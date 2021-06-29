@@ -1,0 +1,163 @@
+{
+  "amount": 3000000,
+  "feeInsurance": 0.00312,
+  "flexibleLoans": [
+    {
+      "amount": 86609,
+      "interestRate": 23.69,
+      "annualNominalRate": 23.69,
+      "monthlyNominalRate": 23.69,
+      "installment": 48
+    },
+    {
+      "amount": 87902,
+      "installment": 47
+    },
+    {
+      "amount": 89253,
+      "installment": 46
+    },
+    {
+      "amount": 90666,
+      "installment": 45
+    },
+    {
+      "amount": 92145,
+      "installment": 44
+    },
+    {
+      "amount": 93696,
+      "installment": 43
+    },
+    {
+      "amount": 95322,
+      "installment": 42
+    },
+    {
+      "amount": 97030,
+      "installment": 41
+    },
+    {
+      "amount": 98826,
+      "installment": 40
+    },
+    {
+      "amount": 100716,
+      "installment": 39
+    },
+    {
+      "amount": 102707,
+      "installment": 38
+    },
+    {
+      "amount": 104809,
+      "installment": 37
+    },
+    {
+      "amount": 107031,
+      "installment": 36
+    },
+    {
+      "amount": 109382,
+      "installment": 35
+    },
+    {
+      "amount": 111873,
+      "installment": 34
+    },
+    {
+      "amount": 114519,
+      "installment": 33
+    },
+    {
+      "amount": 117333,
+      "installment": 32
+    },
+    {
+      "amount": 120332,
+      "installment": 31
+    },
+    {
+      "amount": 123533,
+      "installment": 30
+    },
+    {
+      "amount": 126958,
+      "installment": 29
+    },
+    {
+      "amount": 130632,
+      "installment": 28
+    },
+    {
+      "amount": 134580,
+      "installment": 27
+    },
+    {
+      "amount": 138837,
+      "installment": 26
+    },
+    {
+      "amount": 143437,
+      "installment": 25
+    },
+    {
+      "amount": 148425,
+      "installment": 24
+    },
+    {
+      "amount": 153850,
+      "installment": 23
+    },
+    {
+      "amount": 159773,
+      "installment": 22
+    },
+    {
+      "amount": 166264,
+      "installment": 21
+    },
+    {
+      "amount": 173409,
+      "installment": 20
+    },
+    {
+      "amount": 181311,
+      "installment": 19
+    },
+    {
+      "amount": 190097,
+      "installment": 18
+    },
+    {
+      "amount": 199921,
+      "installment": 17
+    },
+    {
+      "amount": 210979,
+      "installment": 16
+    },
+    {
+      "amount": 223518,
+      "installment": 15
+    },
+    {
+      "amount": 237855,
+      "installment": 14
+    },
+    {
+      "amount": 254405,
+      "installment": 13
+    },
+    {
+      "amount": 273720,
+      "installment": 12
+    }
+  ],
+  "idOffer": "d561b1a4-8df4-4305-bf89-f0a8e758acda",
+  "insurance": 817.0825,
+  "interestAmount": 41250,
+  "interestRate": 16.5,
+  "name": "Crédito personalizado",
+  "type": "FLEXIBLE_LOAN"
+}

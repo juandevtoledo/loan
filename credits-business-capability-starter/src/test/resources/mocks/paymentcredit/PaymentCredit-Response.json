@@ -1,0 +1,19 @@
+{
+  "content": {
+    "status": "ACCEPT",
+    "loanDetail": {
+      "idLoan": "OSJP224",
+      "idCredit": "72222e7a-224d-4732-a755-d7cf474bf843",
+      "productType": "8a8187256bd203cd016bd241fed011c6",
+      "balance": 20000.0,
+      "state": null,
+      "paidInstallments": 2,
+      "installments": 4,
+      "nextInstallment": {
+        "dueOn": "2019-11-15T13:00",
+        "amount": 10005.0
+      },
+      "interestRate": 0.0
+    }
+  }
+}

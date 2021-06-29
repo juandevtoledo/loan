@@ -1,0 +1,204 @@
+{
+  "idCredit": "bd20523c-9ba6-4fcc-bdba-27508aa83824",
+  "clientInformation": {
+    "name": "ALAN",
+    "lastName": "HARPER R",
+    "documentId": {
+      "type": "CC",
+      "issueDate": "1993-06-13",
+      "id": "22300458"
+    },
+    "gender": "M",
+    "phone": {
+      "number": "3994034217",
+      "prefix": "57"
+    },
+    "email": "prueb29395@mailinator.com"
+  },
+  "idClient": "37b56ce1-0085-479c-8663-0cdc72802df8",
+  "loanRequested": {
+    "amount": 35700000
+  },
+  "initialOffer": {
+    "amount": 12325000,
+    "offerEntities": [
+      {
+        "interestRate": 16.5,
+        "amount": 12325000,
+        "installments": 48,
+        "name": "Crédito con cuotas bajas",
+        "monthlyNominalRate": 1.28,
+        "type": "COMFORTABLE_LOAN",
+        "amountInstallment": 355818,
+        "feeInsurance": 0.00312,
+        "idOffer": "e56e4efb-3342-4226-a4f8-12cfb2655b69"
+      },
+      {
+        "insurance": 3356.8472708333334,
+        "interestRate": 16.5,
+        "amount": 12325000,
+        "flexibleLoans": [
+          {
+            "amount": 355815,
+            "installment": 48
+          },
+          {
+            "amount": 361127,
+            "installment": 47
+          },
+          {
+            "amount": 366678,
+            "installment": 46
+          },
+          {
+            "amount": 372484,
+            "installment": 45
+          },
+          {
+            "amount": 378562,
+            "installment": 44
+          },
+          {
+            "amount": 384931,
+            "installment": 43
+          },
+          {
+            "amount": 391613,
+            "installment": 42
+          },
+          {
+            "amount": 398630,
+            "installment": 41
+          },
+          {
+            "amount": 406007,
+            "installment": 40
+          },
+          {
+            "amount": 413771,
+            "installment": 39
+          },
+          {
+            "amount": 421955,
+            "installment": 38
+          },
+          {
+            "amount": 430590,
+            "installment": 37
+          },
+          {
+            "amount": 439716,
+            "installment": 36
+          },
+          {
+            "amount": 449375,
+            "installment": 35
+          },
+          {
+            "amount": 459612,
+            "installment": 34
+          },
+          {
+            "amount": 470481,
+            "installment": 33
+          },
+          {
+            "amount": 482042,
+            "installment": 32
+          },
+          {
+            "amount": 494360,
+            "installment": 31
+          },
+          {
+            "amount": 507513,
+            "installment": 30
+          },
+          {
+            "amount": 521585,
+            "installment": 29
+          },
+          {
+            "amount": 536677,
+            "installment": 28
+          },
+          {
+            "amount": 552900,
+            "installment": 27
+          },
+          {
+            "amount": 570386,
+            "installment": 26
+          },
+          {
+            "amount": 589286,
+            "installment": 25
+          },
+          {
+            "amount": 609776,
+            "installment": 24
+          },
+          {
+            "amount": 632066,
+            "installment": 23
+          },
+          {
+            "amount": 656398,
+            "installment": 22
+          },
+          {
+            "amount": 683067,
+            "installment": 21
+          },
+          {
+            "amount": 712421,
+            "installment": 20
+          },
+          {
+            "amount": 744886,
+            "installment": 19
+          },
+          {
+            "amount": 780979,
+            "installment": 18
+          },
+          {
+            "amount": 821340,
+            "installment": 17
+          },
+          {
+            "amount": 866771,
+            "installment": 16
+          },
+          {
+            "amount": 918285,
+            "installment": 15
+          },
+          {
+            "amount": 977186,
+            "installment": 14
+          },
+          {
+            "amount": 1045178,
+            "installment": 13
+          }
+        ],
+        "name": "Crédito personalizado",
+        "monthlyNominalRate": 1.28,
+        "interestAmount": 169468.75,
+        "type": "FLEXIBLE_LOAN",
+        "feeInsurance": 0.00312,
+        "idOffer": "82e65515-476d-4cca-902a-c8d698984afc"
+      }
+    ],
+    "generateDate": "2020-07-02T17:39:58.070",
+    "riskEngineAnalysis": {
+      "interestRate": 16.5,
+      "amount": 12325000,
+      "type": "dummy",
+      "maxAmountInstallment": 1115000
+    },
+    "typeOffer": "CO"
+  },
+  "automaticDebit": 1
+}

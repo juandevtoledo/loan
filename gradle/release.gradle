@@ -1,0 +1,20 @@
+repositories {
+  mavenLocal()
+  maven {
+    url "https://piso19.jfrog.io/piso19/libs-release"
+    credentials {
+      username = "$jfrogUser"
+      password = "$jfrogPassword"
+    }
+  }
+  maven {
+    url "https://piso19.jfrog.io/piso19/libs-snapshot"
+    credentials {
+      username = "$jfrogUser"
+      password = "$jfrogPassword"
+    }
+  }
+}
+apply plugin: "org.sonarqube"
+apply plugin: 'net.researchgate.release'
+

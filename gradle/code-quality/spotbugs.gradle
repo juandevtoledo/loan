@@ -1,0 +1,16 @@
+spotbugs {
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+    effort = 'max'
+    reportLevel = 'low'
+    visitors = [ 'FindSqlInjection', 'SwitchFallthrough' ]
+    omitVisitors = [ 'FindNonShortCircuit' ]
+    reportsDir = file("$buildDir/spotbugs")
+    includeFilter = file("include.xml")
+    excludeFilter = rootProject.file("gradle/code-quality/config/spotbugs/excludeFilter.xml")
+    onlyAnalyze = [ 'com.foobar.MyClass', 'com.foobar.mypkg.*' ]
+    maxHeapSize = '1g'
+    extraArgs = [ '-nested:false' ]
+    jvmArgs = [ '-Duser.language=ja' ]
+}

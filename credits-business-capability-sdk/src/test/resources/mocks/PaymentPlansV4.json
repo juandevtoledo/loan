@@ -1,0 +1,31 @@
+{
+  "principalDebit": 1.0E+7,
+  "monthlyNominalRate": 1.28,
+  "annualNominalRate": 16.5,
+  "startDate": "2020-08-15",
+  "endDate": "2024-07-15",
+  "paymentPlan": [
+    {
+      "installment": 1,
+      "dueDate": "2020-06-02",
+      "principalDue": "728000",
+      "totalDue": "728000",
+      "interestDue": "291734",
+      "feesDue": "5304",
+      "percentPrincipalDue": "59",
+      "percentInterestDue": "40",
+      "percentFeesDue": "0.73"
+    },
+    {
+      "installment": 2,
+      "dueDate": "2020-07-03",
+      "totalDue": "728000",
+      "principalDue": "728000",
+      "interestDue": "291734",
+      "feesDue": "5304",
+      "percentPrincipalDue": "59",
+      "percentInterestDue": "40",
+      "percentFeesDue": "0.73"
+    }
+  ]
+}

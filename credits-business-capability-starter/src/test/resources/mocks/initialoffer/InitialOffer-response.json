@@ -1,0 +1,11 @@
+{
+  "content": {
+    "idCredit": "f564b952-3b37-4f58-b25e-757a511bb985",
+    "initialOffer": {
+      "minAmount": 500000.0,
+      "maxAmount": 3000000.0,
+      "maxAmountInstallment": 5000,
+      "interestRate": 1.2
+    }
+  }
+}

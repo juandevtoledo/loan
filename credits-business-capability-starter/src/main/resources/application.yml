@@ -1,0 +1,121 @@
+credits:
+  endpoint:
+    base: /credits
+server:
+  port: 8084
+  servlet:
+    contextPath: /credits
+brave:
+  tracer:
+    table-name: credits
+
+spring:
+  application:
+    name: "credits-business-capability"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          verify-exp: false
+          private-key-value: classpath:private_key.pem
+          public-key-value: classpath:public_key.pem
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  health:
+    circuitbreakers:
+      enabled: true
+
+health:
+  flexibility:
+    enabled: false
+
+creditscondition:
+  minOfferAmount: 300000
+  loanProductId: "0"
+  defaultCurrency: "0"
+  insuranceCost: 0
+  cbsProductKeyType: "cbskey"
+  feeInsurance: 0
+  feeAmountInstallement: 1
+  minDayToPaymin: 15
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: "us-east-2"
+    sqs:
+      end-point: http://sqs.dev.local:9324
+      listeners:
+        application-events: http://sqs.dev.local:9324/queue/default
+      queue:
+        client-events: http://sqs.dev.local:9324/queue/default
+        client-events-v2: http://sqs.dev.local:9324/queue/default
+        saving-account-events:  http://sqs.dev.local:9324/queue/default
+        transaction-events: http://sqs.dev.local:9324/queue/default
+        reporting-events: http://sqs.dev.local:9324/queue/default
+        reporting-events-v2: http://sqs.dev.local:9324/queue/default
+        promissorynote-events: http://sqs.dev.local:9324/queue/default
+        client-alerts-events: http://sqs.dev.local:9324/queue/default
+        risk-engine: http://sqs.dev.local:9324/queue/default
+        scheduler-events: http://sqs.dev.local:9324/queue/default
+        pse-events: http://sqs.dev.local:9324/queue/default
+        reporting-rx-events:
+          url: http://sqs.dev.local:9324/queue/default
+          max-number-of-messages: 3
+          delay: 360
+      max-number-of-messages: 10
+    dynamodb:
+      endpoint: http://dynamo.dev.local:8000
+
+services:
+  clients:
+    url: "http://domain.local:8081/"
+  savings:
+    url: "http://domain.local:8082/"
+  otp:
+    url: "http://domain.local:8083/"
+  promissorynote:
+    url: "http://domain.local:8093/"
+    connectionTimeOut: 45
+    writeTimeOut: 45
+    readTimeOut: 45
+  riskengine:
+    url: "http://happy.riskengine.com/api/"
+    connectionTimeOut: 0
+    writeTimeOut: 0
+    readTimeOut: 0
+
+
+flexibility:
+  sdk:
+    url: "http://happy.flexibilty.com"
+    clientId: fakeClientId
+    secret: fakeSecretId
+  mask-fields:
+    complete: '/password,/newpin,/oldpin,/newPassword,/oldPassword'
+    partially:
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 100
+      minimumNumberOfCalls: 100
+      permittedNumberOfCallsInHalfOpenState: 3
+      failureRateThreshold: 50
+      slowCallRateThreshold: 70
+      slowCallDurationThreshold: 6s
+      ignore-exceptions:
+        - flexibility.client.connector.ProviderException
+  instances:
+    flexibility:
+      baseConfig: default
+
+logging:
+  mask-fields:
+    complete:
+    partially:

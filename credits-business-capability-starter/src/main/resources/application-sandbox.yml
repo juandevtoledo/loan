@@ -1,0 +1,116 @@
+credits:
+  endpoint:
+    base: /credits
+server:
+  port: 8084
+  servlet:
+    contextPath: /credits
+
+spring:
+  application:
+    name: "credits-business-capability"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          verify-exp: false
+          private-key-value: classpath:private_key.pem
+          public-key-value: classpath:public_key.pem
+  zipkin:
+    baseUrl: http://lbk-nlb-sand-b4ae09a807e738b7.elb.us-east-1.amazonaws.com:9411/
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  health:
+    circuitbreakers:
+      enabled: true
+
+health:
+  flexibility:
+    enabled: false
+
+creditscondition:
+  minOfferAmount: 300000
+  loanProductId: "005"
+  defaultCurrency: "COP"
+  insuranceCost: 0
+  cbsProductKeyType: "8a818f267010cf5801701207ffe14068"
+  feeInsurance: 0.0026
+  feeAmountInstallement: 10000
+  minDayToPaymin: 15
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: "us-east-1"
+    sqs:
+      end-point: https://sqs.us-east-1.amazonaws.com/848155883266/
+      listeners:
+        application-events: https://sqs.us-east-1.amazonaws.com/848155883266/creditsEmailQueue-sand
+      queue:
+        client-events: https://sqs.us-east-1.amazonaws.com/848155883266/clientsEvents-sand
+        client-events-v2: htsttps://sqs.us-east-1.amazonaws.com/848155883266/clientEventsV2-sand
+        saving-account-events: https://sqs.us-east-1.amazonaws.com/848155883266/savingsaccountsEvents-sand
+        transaction-events: https://sqs.us-east-1.amazonaws.com/848155883266/transactionsEvents-sand
+        reporting-events: https://sqs.us-east-1.amazonaws.com/848155883266/reportingEvents-sand
+        reporting-events-v2: https://sqs.us-east-1.amazonaws.com/848155883266/reportingEventsV2-sand
+        promissorynote-events: https://sqs.us-east-1.amazonaws.com/848155883266/promissorynoteEvents-sand
+        client-alerts-events: https://sqs.us-east-1.amazonaws.com/848155883266/clientAlerts-sand
+        risk-engine: https://sqs.us-east-1.amazonaws.com/848155883266/analytics-events-preapproved-sand
+        scheduler-events: https://sqs.us-east-1.amazonaws.com/848155883266/scheduler-events-sand
+        pse-events: https://sqs.us-east-1.amazonaws.com/848155883266/pse-events-sand
+        reporting-rx-events:
+          url: https://sqs.us-east-1.amazonaws.com/848155883266/reportingEvents-rx-sand
+          max-number-of-messages: 3
+          delay: 36
+      max-number-of-messages: 10
+    dynamodb:
+      endpoint: https://dynamodb.us-east-1.amazonaws.com
+
+services:
+  clients:
+    url: http://lbk-nlb-sand-b4ae09a807e738b7.elb.us-east-1.amazonaws.com:8081/
+  savings:
+    url: http://lbk-nlb-sand-b4ae09a807e738b7.elb.us-east-1.amazonaws.com:8082/
+  otp:
+    url: http://lbk-nlb-sand-b4ae09a807e738b7.elb.us-east-1.amazonaws.com:8083/
+  promissorynote:
+    url: http://lbk-nlb-sand-b4ae09a807e738b7.elb.us-east-1.amazonaws.com:8093/
+    connectionTimeOut: 10
+    writeTimeOut: 10
+    readTimeOut: 60
+  riskengine:
+    url: "http://happy.riskengine.com/api/"
+    connectionTimeOut: 0
+    writeTimeOut: 0
+    readTimeOut: 0
+
+
+flexibility:
+  sdk:
+    url: http://flex-internal-nlb-sand-7780f47397c1c3fc.elb.us-east-1.amazonaws.com
+    clientId: ABTr4YVFhas8Yfq1uGfR
+    secret: fRrdj0JD1zDLLcPHpVkCsKRKPG5C4kafaTW5PUSy
+  mask-fields:
+    complete: '/password,/newpin,/oldpin,/newPassword,/oldPassword'
+    partially:
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 100
+      minimumNumberOfCalls: 100
+      permittedNumberOfCallsInHalfOpenState: 3
+      failureRateThreshold: 50
+      slowCallRateThreshold: 70
+      slowCallDurationThreshold: 6s
+      ignore-exceptions:
+        - flexibility.client.connector.ProviderException
+  instances:
+    flexibility:
+      baseConfig: default

@@ -1,0 +1,28 @@
+{
+  "totalBalance": {
+    "value": 600000,
+    "currency": "COP"
+  },
+  "installmentExpectedDue": {
+    "value": 0.00,
+    "currency": "COP"
+  },
+  "loanAmount": {
+    "value": 3500000,
+    "currency": "COP"
+  },
+  "instalmentAccruedDue": {
+    "value": 0.00,
+    "currency": "COP"
+  },
+  "installmentExpected": {
+    "value": 0.00,
+    "currency": "COP"
+  },
+  "state": "ACTIVE",
+  "creationOn": "2020-01-27 10:50",
+  "cutOffDate": "2020-02-17 10:50",
+  "installmentDate": "2020-02-27 10:50",
+  "loanId": 43341876755,
+  "paymentPlanList": []
+}

@@ -1,0 +1,10 @@
+{
+  "amount": 3000000,
+  "amountInstallment": 272981,
+  "feeInsurance": 0.00312,
+  "idOffer": "d561b1a4-8df4-4305-bf89-f0a8e758acda",
+  "installments": 32,
+  "interestRate": 16.5,
+  "name": "Crédito Flexible",
+  "type": "FLEXIBLE_LOAN"
+}

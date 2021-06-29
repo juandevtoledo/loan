@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "failure": "WITHDRAWAL_PAST_OVERDRAFT_CONSTRAINTS",
+      "value": "450",
+      "detail": "10000.0"
+    }
+  ]
+}

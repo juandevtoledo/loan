@@ -1,0 +1,85 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+
+group = 'com.lulobank'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+bootJar {
+    mainClassName = 'com.lulobank.credits.starter.Application'
+}
+
+configurations {
+    runtime.exclude group: 'org.springframework.data', module: 'spring-data-redis'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
+
+configurations.all {
+    exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
+}
+
+dependencies {
+    // Projects
+    implementation project(':credits-business-capability-services')
+
+    // Mapstruct
+    implementation 'org.mapstruct:mapstruct-jdk8:1.3.1.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+    testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+
+    // Spring boot & Cloud starters
+    implementation 'org.springframework:spring-web:5.2.8.RELEASE'
+    implementation "org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}"
+    implementation 'org.springframework.security:spring-security-core:5.2.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-web:5.2.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-config:5.2.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-oauth2-jose:5.2.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-oauth2-core:5.2.1.RELEASE'
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.2.1.RELEASE'
+
+    // Swagger
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+    // Lulobank
+    implementation 'com.lulobank:lulobank-core-spring:2.0.10'
+    implementation 'com.lulobank:lulobank-core:1.0.23-SNAPSHOT'
+    implementation 'com.lulobank:lulobank-flexmiddleware-sdk:1.0.136'
+    implementation 'com.lulobank:health-check-core:1.0.6'
+    implementation 'com.lulobank:health-check-spring:1.0.6'
+    implementation 'com.lulobank:tracing-lib:0.0.46'
+    implementation 'com.lulobank:logger-api:0.0.6'
+    implementation 'com.lulobank:otp-business-capability-sdk:1.0.144'
+    compile('com.lulobank:savingsaccounts-business-capability-sdk:1.0.192') {
+        exclude group: 'com.lulobank', module: 'lulobank-core'
+    }
+    compile ("com.lulobank:promissorynote-business-capability-sdk:1.0.33") {
+        exclude group: 'com.lulobank', module: 'lulobank-core'
+    }
+    implementation 'com.lulobank:lulobank-starter:2.1.3'
+
+    // Functional programming
+    implementation 'io.vavr:vavr:0.10.2'
+
+    //Scalability
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.0'
+    implementation 'io.github.resilience4j:resilience4j-all:1.7.0'
+
+    // Others
+    implementation 'net.logstash.logback:logstash-logback-encoder:6.3'
+    implementation 'org.jetbrains:annotations:16.0.1'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    // Testing libs
+    testImplementation 'commons-io:commons-io:2.6'
+}

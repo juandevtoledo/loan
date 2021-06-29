@@ -1,0 +1,140 @@
+[
+  {
+    "due": "2021-02-25 01:00",
+    "state": "LOAN_REPAYMENT",
+    "totalDue": {
+      "amount": {
+        "value": 285970.1
+      },
+      "currency": {
+        "value": "COP"
+      }
+    },
+    "detail": {
+      "insuranceAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "capitalAmount": {
+        "amount": {
+          "value": 156750.23
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "interestAmount": {
+        "amount": {
+          "value": 129219.87
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "penaltyAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      }
+    }
+  },
+  {
+    "due": "2021-02-25 00:14",
+    "state": "LOAN_REPAYMENT",
+    "totalDue": {
+      "amount": {
+        "value": 129219.87
+      },
+      "currency": {
+        "value": "COP"
+      }
+    },
+    "detail": {
+      "insuranceAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "capitalAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "interestAmount": {
+        "amount": {
+          "value": 129219.87
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "penaltyAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      }
+    }
+  },
+  {
+    "due": "2021-01-25 00:48",
+    "state": "LOAN_REPAYMENT_TOTAL",
+    "totalDue": {
+      "amount": {
+        "value": 285970.1
+      },
+      "currency": {
+        "value": "COP"
+      }
+    },
+    "detail": {
+      "insuranceAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "capitalAmount": {
+        "amount": {
+          "value": 167139.8
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "interestAmount": {
+        "amount": {
+          "value": 118830.3
+        },
+        "currency": {
+          "value": "COP"
+        }
+      },
+      "penaltyAmount": {
+        "amount": {
+          "value": 0
+        },
+        "currency": {
+          "value": "COP"
+        }
+      }
+    }
+  }
+]

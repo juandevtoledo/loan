@@ -1,0 +1,73 @@
+{
+  "principalDebit": 2500000,
+  "interestRate": 16.5,
+  "monthlyNominalRate": 1.16,
+  "startDate": "2021-03-15",
+  "endDate": "2025-02-17",
+  "paymentPlan": [
+    {
+      "installment": 1,
+      "state": "PENDING",
+      "dueDate": "2021-03-15",
+      "cutOffDate": "2021-03-05",
+      "principalDue": 26567.98,
+      "totalDue": 84561.13,
+      "interestDue": 51493.15,
+      "feesDue": 6500,
+      "penaltyDue": 0.0,
+      "pendingBalance": 2473432.02,
+      "percentPrincipalDue": 31.42,
+      "percentInterestDue": 60.9,
+      "percentFeesDue": 7.69,
+      "percentPenaltyDue": 0.0
+    },
+    {
+      "installment": 2,
+      "state": "PENDING",
+      "dueDate": "2021-04-15",
+      "cutOffDate": "2021-04-05",
+      "principalDue": 32937.6,
+      "totalDue": 84492.05,
+      "interestDue": 45123.53,
+      "feesDue": 6430.92,
+      "penaltyDue": 0.0,
+      "pendingBalance": 2440494.42,
+      "percentPrincipalDue": 38.99,
+      "percentInterestDue": 53.41,
+      "percentFeesDue": 7.62,
+      "percentPenaltyDue": 0.0
+    },
+    {
+      "installment": 3,
+      "state": "PENDING",
+      "dueDate": "2021-05-18",
+      "cutOffDate": "2021-05-08",
+      "principalDue": 30666.06,
+      "totalDue": 84406.42,
+      "interestDue": 47395.07,
+      "feesDue": 6345.29,
+      "penaltyDue": 0.0,
+      "pendingBalance": 2409828.36,
+      "percentPrincipalDue": 36.34,
+      "percentInterestDue": 56.16,
+      "percentFeesDue": 7.52,
+      "percentPenaltyDue": 0.0
+    },
+    {
+      "installment": 4,
+      "state": "PENDING",
+      "dueDate": "2021-06-16",
+      "cutOffDate": "2021-06-06",
+      "principalDue": 36934.27,
+      "totalDue": 84326.68,
+      "interestDue": 41126.86,
+      "feesDue": 6265.55,
+      "penaltyDue": 0.0,
+      "pendingBalance": 2372894.09,
+      "percentPrincipalDue": 43.8,
+      "percentInterestDue": 48.78,
+      "percentFeesDue": 7.44,
+      "percentPenaltyDue": 0.0
+    }
+  ]
+}

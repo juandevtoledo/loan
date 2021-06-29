@@ -1,0 +1,28 @@
+{
+  "idClient": "10f095cf-f858-442f-9d6f-3898b40ee485",
+  "clientLoanRequestedAmount": 2000000,
+  "loanPurpose": "Educaci\\363n",
+  "riskEngineAnalysis": {
+    "amount": 2000000,
+    "interestRate": 23.69,
+    "maxAmountInstallment": 1560420.0,
+    "type": "v0"
+  },
+  "clientInformation": {
+    "documentId": {
+      "id": "1072666323",
+      "type": "CC",
+      "issueDate": "2010-09-23"
+    },
+    "name": "CAMILA",
+    "lastName": "SANTANA",
+    "middleName": " ",
+    "secondSurname": "VALENCIA",
+    "gender": "F",
+    "email": "camila.santana.valencia@gmail.com",
+    "phone": {
+      "number": "3016494877",
+      "prefix": "57"
+    }
+  }
+}
